@@ -2,79 +2,43 @@ package com.jihed.accessoires.entities;
 
 import java.util.Date;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data 
+@NoArgsConstructor 
+@AllArgsConstructor
 @Entity
 public class Accessoire {
-	
-	@Id
-	@GeneratedValue (strategy=GenerationType.IDENTITY)
-	private long idAccess;
 
-	private String nomAccess;
-	private String couleurAccess;
-	private Double prixAccess;
-	private Date dateSortieAcess;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idAccess;
 
-	public Accessoire() {
-		super();
-	}
+    @NotNull
+    @Size(min = 4, max = 15)
+    private String nomAccess;
 
-	public Accessoire(String nomAccess, String couleurAccess, Double prixAccess, Date dateSortieAcess) {
-		super();
-		this.nomAccess = nomAccess;
-		this.couleurAccess = couleurAccess;
-		this.prixAccess = prixAccess;
-		this.dateSortieAcess = dateSortieAcess;
-	}
+    private String couleurAccess;
 
-	public long getIdAccess() {
-		return idAccess;
-	}
+    @Min(value = 10)
+    @Max(value = 10000)
+    private Double prixAccess;
 
-	public void setIdAccess(long idAccess) {
-		this.idAccess = idAccess;
-	}
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @PastOrPresent
+    private Date dateSortieAcess;
 
-	public String getNomAccess() {
-		return nomAccess;
-	}
-
-	public void setNomAccess(String nomAccess) {
-		this.nomAccess = nomAccess;
-	}
-
-	public String getCouleurAccess() {
-		return couleurAccess;
-	}
-
-	public void setCouleurAccess(String couleurAccess) {
-		this.couleurAccess = couleurAccess;
-	}
-
-	public Double getPrixAccess() {
-		return prixAccess;
-	}
-
-	public void setPrixAccess(Double prixAccess) {
-		this.prixAccess = prixAccess;
-	}
-
-	public Date getDateSortieAcess() {
-		return dateSortieAcess;
-	}
-
-	public void setDateSortieAcess(Date dateSortieAcess) {
-		this.dateSortieAcess = dateSortieAcess;
-	}
-
-	@Override
-	public String toString() {
-		return "Accessoire [idAccess=" + idAccess + ", nomAccess=" + nomAccess + ", couleurAccess=" + couleurAccess
-				+ ", prixAccess=" + prixAccess + ", dateSortieAcess=" + dateSortieAcess + "]";
-	}
-
+    @ManyToOne
+    private Marque marque;
 }

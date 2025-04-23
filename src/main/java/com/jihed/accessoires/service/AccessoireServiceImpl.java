@@ -8,13 +8,19 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.jihed.accessoires.entities.Accessoire;
+import com.jihed.accessoires.entities.Marque;
 import com.jihed.accessoires.repos.AccessoireRepository;
+import com.jihed.accessoires.repos.MarqueRepository;
 
 @Service
 public class AccessoireServiceImpl implements AccessoireService{
 
 	@Autowired
 	AccessoireRepository accessoireRepository;
+	
+	@Autowired
+	MarqueRepository marqueRepository;
+	
 	@Override
 	public Accessoire saveAccessoire(Accessoire a) {
 		return accessoireRepository.save(a);
@@ -49,5 +55,46 @@ public class AccessoireServiceImpl implements AccessoireService{
 	public Page<Accessoire> getAllAccessoireParPage(int page, int size) {
 		return accessoireRepository.findAll(PageRequest.of(page, size));  
 	}
+
+	@Override
+	public List<Accessoire> findByNomAccess(String nom) {
+		
+		return accessoireRepository.findByNomAccess(nom);
+	}
+
+	@Override
+	public List<Accessoire> findByNomAccessContains(String nom) {
+		return accessoireRepository.findByNomAccessContains(nom);
+	}
+
+	@Override
+	public List<Accessoire> findByNomPrix(String nom, Double prix) {
+		return accessoireRepository.findByNomPrix(nom, prix);
+	}
+
+	@Override
+	public List<Accessoire> findByMarque(Marque marque) {
+		return accessoireRepository.findByMarque(marque);
+	}
+
+	@Override
+	public List<Accessoire> findByMarqueIdMar(Long id) {
+		return accessoireRepository.findByMarqueIdMar(id);
+	}
+
+	@Override
+	public List<Accessoire> findByOrderByNomAccessAsc() {
+		return accessoireRepository.findByOrderByNomAccessAsc();
+	}
+
+	@Override
+	public List<Accessoire> trierAccessoireNomsPrix() {
+		return accessoireRepository.trierAccessoireNomsPrix();
+	}
+	
+	@Override 
+	 public List<Marque> getAllMarques() { 
+	  return marqueRepository.findAll(); 
+	 }
 
 }

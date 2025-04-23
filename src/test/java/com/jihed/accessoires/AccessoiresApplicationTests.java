@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 
 import com.jihed.accessoires.entities.Accessoire;
+import com.jihed.accessoires.entities.Marque;
 import com.jihed.accessoires.repos.AccessoireRepository;
 import com.jihed.accessoires.service.AccessoireService;
 
@@ -23,8 +24,8 @@ class AccessoiresApplicationTests {
 	
 	@Test 
 	public void testCreateAccessoire() { 
-	Accessoire access = new Accessoire("casque","blanc",190.0,new Date()); 
-	AccessoireRepository.save(access); 
+	//Accessoire access = new Accessoire(0, "casque","blanc",190.0,new Date(), null); 
+	//AccessoireRepository.save(access); 
 	}
 
 	@Test 
@@ -76,5 +77,54 @@ class AccessoiresApplicationTests {
 	    } 
 	    */
 	}
+	
+	@Test 
+	public void testFindAccessoireContains() 
+	{ 
+		List<Accessoire> access = AccessoireRepository.findByNomAccessContains("cla");
+		for (Accessoire a : access) {
+	        System.out.println(a); 
+	    }
+	}
+	
+	@Test 
+	public void testfindByNomPrix() 
+	{ 
+	List<Accessoire>  access = AccessoireRepository.findByNomPrix("clavier", 20.0); 
+	for (Accessoire a : access) 
+	{ 
+	System.out.println(a); 
+	} 
+	} 
+	@Test 
+	public void testfindByMarque() 
+	{ 
+	Marque mar = new Marque(); 
+	mar.setIdMar(2L);    
+	List<Accessoire>  access = AccessoireRepository.findByMarque(mar); 
+	for (Accessoire a : access) 
+	{ 
+	System.out.println(a); 
+	} 
+	} 
+	
+	@Test 
+	public void findByCategorieIdCat() 
+	{    
+	List<Accessoire>  access = AccessoireRepository.findByMarqueIdMar(2L); 
+	for (Accessoire a : access) 
+	{ 
+	System.out.println(a); 
+	} 
+	}
+	
+	@Test
+	public void trierAccessoireNomsPrix() {
+		List<Accessoire> access = AccessoireRepository.trierAccessoireNomsPrix();
+		for (Accessoire a : access) {
+			System.out.println(a);
+		}
+	}
+	
 
 }
